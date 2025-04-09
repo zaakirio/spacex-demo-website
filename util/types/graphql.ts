@@ -1337,10 +1337,46 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
+export type MissionsQueryVariables = Exact<{
+  input: MissionsFind;
+}>;
 export type ShipsQueryVariables = Exact<{ [key: string]: never; }>;
 
+export type MissionsQuery = { __typename?: 'Query', missions?: Array<{ __typename?: 'Mission', name?: string | null }> | null };
 
 export type ShipsQuery = { __typename?: 'Query', ships?: Array<{ __typename?: 'Ship', id?: string | null, class?: number | null, name?: string | null } | null> | null };
 
+export const MissionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Missions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MissionsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"missions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<MissionsQuery, MissionsQueryVariables>;
 
 export const ShipsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ShipsQuery, ShipsQueryVariables>;
+
+
+export interface ShipsInput {
+  pagination: {
+    limit: number;
+    offset: number;
+  };
+}
+
+export interface ShipsMissingAttributesResult {
+  shipId: string;
+  missingCount: number;
+}
+
+export interface ShipsMissingAttributesQuery {
+  shipsMissingAttributes: ShipsMissingAttributesResult[] | null;
+}
+
+export interface ShipsMissingAttributesInput {
+  attributes: string[];
+}
+
+export type ShipWithMissions = Ship & {
+  __typename?: 'ShipWithMissions';
+  missionCount?: Maybe<Scalars['Int']['output']>;
+  missionNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export interface ShipsWithMissionsQuery {
+  shipsWithMissions: ShipWithMissions[] | null;
+}

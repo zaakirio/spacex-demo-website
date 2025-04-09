@@ -1,16 +1,32 @@
 import gql from "graphql-tag";
 
 const ships = gql`
-  query ships {
-    ships {
-    id
-    class
-    name
+  query ShipsWithMissions {
+    shipsWithMissions {
+      id
+      name
+      type
+      class
+      active
+      home_port
+      year_built
+      image
+      missionCount
+      missionNames
     }
   }
 `;
 
-const query = { ships };
+const shipsMissingAttributes = gql`
+  query ShipsMissingAttributes($input: MissingAttributesInput!) {
+    shipsMissingAttributes(input: $input) {
+      shipId
+      missingCount
+    }
+  }
+`;
+
+const query = { ships, shipsMissingAttributes };
 const mutations = {};
 const Ships = { query, mutations };
 export { Ships };

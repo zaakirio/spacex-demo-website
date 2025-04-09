@@ -16,9 +16,11 @@ export default function RootLayout({
   const client = useClient();
   return (
     <html lang="en">
-      <ApolloProvider client={client}>
-        <body className={inter.className}>{children}</body>
-      </ApolloProvider>
+      <body className={inter.className}>
+        <ApolloProvider client={client}>
+          {children}
+        </ApolloProvider>
+      </body>
     </html>
   );
 }

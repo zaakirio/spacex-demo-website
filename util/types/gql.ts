@@ -13,7 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query ships {\n    ships {\n      id\n      class\n      name\n    }\n  }\n": types.ShipsDocument,
+    // "\n  query Missions($input: MissionsInput!) {\n    missions(input: $input) {\n      name\n    }\n  }\n": types.MissionsDocument,
+    "\n  query Ships($input: ShipsInput!) {\n    ships(input: $input) {\n      id\n      name\n      image\n    }\n  }\n": types.ShipsDocument,
 };
 
 /**
@@ -32,8 +33,9 @@ export function gql(source: string): unknown;
 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  query ships {\n    ships {\n      id\n      class\n      name\n    }\n  }\n"): (typeof documents)["\n  query ships {\n    ships {\n      id\n      class\n      name\n    }\n  }\n"];
+//  */
+// export function gql(source: "\n  query Missions($input: MissionsInput!) {\n    missions(input: $input) {\n      name\n    }\n  }\n"): (typeof documents)["\n  query Missions($input: MissionsInput!) {\n    missions(input: $input) {\n      name\n    }\n  }\n"];
+export function gql(source: "\n  query Ships($input: ShipsInput!) {\n    ships(input: $input) {\n      id\n      name\n      image\n    }\n  }\n"): (typeof documents)["\n  query Ships($input: ShipsInput!) {\n    ships(input: $input) {\n      id\n      name\n      image\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
