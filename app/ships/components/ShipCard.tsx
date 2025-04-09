@@ -1,3 +1,5 @@
+"use client";
+
 import { ShipWithMissions } from "@/util/types/graphql";
 import { useState } from "react";
 import ShipModal from "./ShipModal";

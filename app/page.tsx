@@ -1,25 +1,11 @@
-"use client";
+import { getShipsData, getMissingAttributesData } from './util/fetchData';
+import ShipCard from './ships/components/ShipCard';
 
-import { useState } from "react";
-import apiCalls from "@/graphql";
-import { ShipsWithMissionsQuery, ShipsMissingAttributesQuery } from "@/util/types/graphql";
-import { useQuery } from "@apollo/client";
-import ShipCard from "./ships/components/ShipCard";
-
-export default function Home() {
-  const { data: shipsData, loading: shipsLoading, error: shipsError } = useQuery<ShipsWithMissionsQuery>(apiCalls.queries.ships);
-
-  const { data: missingAttributesData, loading: missingAttributesLoading, error: missingAttributesError } = useQuery<ShipsMissingAttributesQuery>(apiCalls.queries.shipsMissingAttributes, {
-    variables: {
-      input: {
-        attributes: ["name", "image", "type", "home_port", "year_built"]
-      }
-    }
-  });
-
-  if (shipsLoading || missingAttributesLoading) return <div className="min-h-screen p-8 bg-gray-50">Loading...</div>;
-  if (shipsError) return <div className="min-h-screen p-8 bg-gray-50">Error: {shipsError.message}</div>;
-  if (missingAttributesError) return <div className="min-h-screen p-8 bg-gray-50">Error: {missingAttributesError.message}</div>;
+export default async function Home() {
+  const [shipsData, missingAttributesData] = await Promise.all([
+    getShipsData(),
+    getMissingAttributesData()
+  ]);
 
   const missingAttributesMap = missingAttributesData?.shipsMissingAttributes?.reduce((acc, item) => {
     if (item?.shipId) {

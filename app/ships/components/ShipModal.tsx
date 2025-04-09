@@ -1,3 +1,5 @@
+"use client";
+
 import { ShipWithMissions } from "@/util/types/graphql";
 import ShipImage from "./ShipImage";
 import ShipHeader from "./ShipHeader";
